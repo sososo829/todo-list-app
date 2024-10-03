@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+# Install nodemon globally for development purposes
+RUN npm install -g nodemon
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port your app runs on
+EXPOSE 5000
+
+# Start the application and run migrations before it
+CMD ["sh", "-c", "npm run migrate && nodemon"]
